@@ -21,3 +21,10 @@ void PeKillerWin::on_pb_open_file_clicked()
 
     data_rider.OpenFile( fname );
 }
+
+void PeKillerWin::on_pb_open_struct_file_clicked()
+{
+    QString fname = QFileDialog::getOpenFileName();
+
+    inf_con.openStructFile( fname );
+}

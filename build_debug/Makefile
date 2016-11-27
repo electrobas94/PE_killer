@@ -50,10 +50,14 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../main.cpp \
 		../pekillerwin.cpp \
-		../datareader.cpp moc_pekillerwin.cpp
+		../datareader.cpp \
+		../pe_item.cpp \
+		../info_container.cpp moc_pekillerwin.cpp
 OBJECTS       = main.o \
 		pekillerwin.o \
 		datareader.o \
+		pe_item.o \
+		info_container.o \
 		moc_pekillerwin.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -342,9 +346,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		../../PE_kiler.pro ../pekillerwin.h \
-		../datareader.h ../main.cpp \
+		../datareader.h \
+		../pe_item.h \
+		../info_container.h ../main.cpp \
 		../pekillerwin.cpp \
-		../datareader.cpp
+		../datareader.cpp \
+		../pe_item.cpp \
+		../info_container.cpp
 QMAKE_TARGET  = PE_kiler
 DESTDIR       = 
 TARGET        = PE_kiler
@@ -951,8 +959,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../pekillerwin.h ../datareader.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../pekillerwin.cpp ../datareader.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../pekillerwin.h ../datareader.h ../pe_item.h ../info_container.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../pekillerwin.cpp ../datareader.cpp ../pe_item.cpp ../info_container.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../pekillerwin.ui $(DISTDIR)/
 
 
@@ -983,6 +991,8 @@ compiler_moc_header_make_all: moc_pekillerwin.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_pekillerwin.cpp
 moc_pekillerwin.cpp: ../datareader.h \
+		../info_container.h \
+		../pe_item.h \
 		../pekillerwin.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/electrobas94/Проекты/PE_kiler -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/6.2.1 -I/usr/include/c++/6.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed -I/usr/include ../pekillerwin.h -o moc_pekillerwin.cpp
@@ -1007,16 +1017,27 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 main.o: ../main.cpp ../pekillerwin.h \
-		../datareader.h
+		../datareader.h \
+		../info_container.h \
+		../pe_item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 pekillerwin.o: ../pekillerwin.cpp ../pekillerwin.h \
 		../datareader.h \
+		../info_container.h \
+		../pe_item.h \
 		ui_pekillerwin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pekillerwin.o ../pekillerwin.cpp
 
 datareader.o: ../datareader.cpp ../datareader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datareader.o ../datareader.cpp
+
+pe_item.o: ../pe_item.cpp ../pe_item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pe_item.o ../pe_item.cpp
+
+info_container.o: ../info_container.cpp ../info_container.h \
+		../pe_item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o info_container.o ../info_container.cpp
 
 moc_pekillerwin.o: moc_pekillerwin.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pekillerwin.o moc_pekillerwin.cpp
