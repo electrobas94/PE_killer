@@ -2,6 +2,7 @@
 #include "ui_pekillerwin.h"
 #include "QFileDialog"
 
+
 PeKillerWin::PeKillerWin(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PeKillerWin)
@@ -16,5 +17,7 @@ PeKillerWin::~PeKillerWin()
 
 void PeKillerWin::on_pb_open_file_clicked()
 {
-    QFileDialog::getOpenFileName();
+    QString fname = QFileDialog::getOpenFileName();
+
+    data_rider.OpenFile( fname );
 }

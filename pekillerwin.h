@@ -2,6 +2,7 @@
 #define PEKILLERWIN_H
 
 #include <QMainWindow>
+#include "datareader.h"
 
 namespace Ui {
 class PeKillerWin;
@@ -20,6 +21,7 @@ private slots:
 
 private:
     Ui::PeKillerWin *ui;
+    DataReader data_rider;
 };
 
 #endif // PEKILLERWIN_H

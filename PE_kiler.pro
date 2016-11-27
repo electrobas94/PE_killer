@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        pekillerwin.cpp
+        pekillerwin.cpp \
+    datareader.cpp
 
-HEADERS  += pekillerwin.h
+HEADERS  += pekillerwin.h \
+    datareader.h
 
 FORMS    += pekillerwin.ui

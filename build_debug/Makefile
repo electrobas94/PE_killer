@@ -49,9 +49,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../main.cpp \
-		../pekillerwin.cpp moc_pekillerwin.cpp
+		../pekillerwin.cpp \
+		../datareader.cpp moc_pekillerwin.cpp
 OBJECTS       = main.o \
 		pekillerwin.o \
+		datareader.o \
 		moc_pekillerwin.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -321,6 +323,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		../.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
 		/usr/lib/qt/mkspecs/features/resolve_config.prf \
@@ -338,8 +341,10 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../../PE_kiler.pro ../pekillerwin.h ../main.cpp \
-		../pekillerwin.cpp
+		../../PE_kiler.pro ../pekillerwin.h \
+		../datareader.h ../main.cpp \
+		../pekillerwin.cpp \
+		../datareader.cpp
 QMAKE_TARGET  = PE_kiler
 DESTDIR       = 
 TARGET        = PE_kiler
@@ -619,6 +624,7 @@ Makefile: ../PE_kiler.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/m
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
 		/usr/lib/qt/mkspecs/features/resolve_config.prf \
@@ -909,6 +915,7 @@ Makefile: ../PE_kiler.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/m
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
 /usr/lib/qt/mkspecs/features/resolve_config.prf:
@@ -944,8 +951,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../pekillerwin.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../pekillerwin.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../pekillerwin.h ../datareader.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../pekillerwin.cpp ../datareader.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../pekillerwin.ui $(DISTDIR)/
 
 
@@ -975,7 +982,8 @@ compiler_rcc_clean:
 compiler_moc_header_make_all: moc_pekillerwin.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_pekillerwin.cpp
-moc_pekillerwin.cpp: ../pekillerwin.h \
+moc_pekillerwin.cpp: ../datareader.h \
+		../pekillerwin.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/electrobas94/Проекты/PE_kiler -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/6.2.1 -I/usr/include/c++/6.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed -I/usr/include ../pekillerwin.h -o moc_pekillerwin.cpp
 
@@ -998,12 +1006,17 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: ../main.cpp ../pekillerwin.h
+main.o: ../main.cpp ../pekillerwin.h \
+		../datareader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 pekillerwin.o: ../pekillerwin.cpp ../pekillerwin.h \
+		../datareader.h \
 		ui_pekillerwin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pekillerwin.o ../pekillerwin.cpp
+
+datareader.o: ../datareader.cpp ../datareader.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datareader.o ../datareader.cpp
 
 moc_pekillerwin.o: moc_pekillerwin.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pekillerwin.o moc_pekillerwin.cpp
