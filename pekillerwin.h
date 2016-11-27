@@ -15,6 +15,9 @@ public:
     explicit PeKillerWin(QWidget *parent = 0);
     ~PeKillerWin();
 
+private slots:
+    void on_pb_open_file_clicked();
+
 private:
     Ui::PeKillerWin *ui;
 };

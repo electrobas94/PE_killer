@@ -1,5 +1,6 @@
 #include "pekillerwin.h"
 #include "ui_pekillerwin.h"
+#include "QFileDialog"
 
 PeKillerWin::PeKillerWin(QWidget *parent) :
     QMainWindow(parent),
@@ -11,4 +12,9 @@ PeKillerWin::PeKillerWin(QWidget *parent) :
 PeKillerWin::~PeKillerWin()
 {
     delete ui;
+}
+
+void PeKillerWin::on_pb_open_file_clicked()
+{
+    QFileDialog::getOpenFileName();
 }
